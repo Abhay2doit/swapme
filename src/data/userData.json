@@ -2,11 +2,11 @@
     {
         "name": "Gaurav",
         "email": "0710gaurav@gmail.com",
-        "password": 12345
+        "password": "12345"
     },
     {
         "name": "Abhyuday",
         "email": "abhyudaysb@gmail.com",
-        "password": 12345
+        "password": "12345"
     }
 ]
