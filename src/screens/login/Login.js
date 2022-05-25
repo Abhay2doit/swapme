@@ -42,10 +42,10 @@ const Login = () => {
           "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
             accessToken
         );
+
         setApiData(await response.json());
       }
       getUserData();
-      console.log({ apiData });
     }
   }, [response]);
 
