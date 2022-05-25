@@ -1,0 +1,74 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+node_modules
+/.pnp
+/.history
+.pnp.js
+
+# testing
+/coverage
+
+# production
+/build
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+#ide config
+/.idea
+
+#node
+npm-debug.log
+yarn-error.log
+
+# Android
+*.apk
+*.hprof
+/android/**/build
+/android/**/.cxx
+/android/**/local.properties
+/android/captures
+/android/expoview/libs/ReactAndroid-temp
+/android/versioned-react-native/ReactAndroid
+/android/versioned-react-native/ReactCommon
+/android/versioned-react-native/codegen
+ReactAndroid-temp.aar
+
+# Expo Client builds
+/client-builds
+
+# Expo web env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+apps/bare-expo/deploy-url.txt
+
+# Expo Doc merging
+docs/pages/versions/*/react-native/ADDED_*.md
+docs/pages/versions/*/react-native/REMOVED_*.md
+docs/pages/versions/*/react-native/*.diff
+
+# Home
+/home/dist
+
+# iOS
+/ios/Pods
+/ios/build
+
+# Expo
+.expo
+__generated__
+web-build
+bare-apps
+
