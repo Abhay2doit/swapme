@@ -1,14 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import Login from "./src/screens/login/Login";
-import { NavigationContainer } from "@react-navigation/native";
+import HomeStack from "./src/routes/HomeStack";
 
 export default function App() {
-  return (
-    <NavigationContainer>
-      <Login />
-    </NavigationContainer>
-  );
+  return <HomeStack />;
 }
 
 const styles = StyleSheet.create({
