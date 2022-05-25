@@ -8,7 +8,7 @@ import {
   Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import userData from "../data/userData.json";
+import userData from "../../data/userData.json";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 
