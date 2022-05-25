@@ -14,7 +14,7 @@ import * as Google from "expo-auth-session/providers/google";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "640386546445-fh7iv04kbgq9me7m7m7pcmm2locg5b8e.apps.googleusercontent.com",
@@ -73,6 +73,10 @@ const Login = () => {
       {apiData ? (
         <View>
           <Text>Welcome {apiData.name}</Text>
+          <Button
+            title="Go to home page"
+            onPress={() => navigation.navigate("Home")}
+          />
           <Image style={styles.userImage} source={{ uri: apiData.picture }} />
         </View>
       ) : null}
