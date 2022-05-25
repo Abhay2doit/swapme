@@ -66,13 +66,10 @@ const Login = ({ navigation }) => {
 
   return (
     <View style={animating ? styles.opaqueContainer : styles.container}>
-      {/* {animating?<ActivityIndicator
-          size="large"
-          style={styles.activityIndicator}
-        />:null} */}
       {apiData ? (
         <View>
           <Text>Welcome {apiData.name}</Text>
+          {/* adding button just to navigate further */}
           <Button
             title="Go to home page"
             onPress={() => navigation.navigate("Home")}

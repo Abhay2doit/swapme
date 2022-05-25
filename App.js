@@ -1,3 +1,4 @@
+//we can remobe this status bar as navigation will take care of this
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import HomeStack from "./src/routes/HomeStack";
