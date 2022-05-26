@@ -39,63 +39,125 @@ function Home({ googleData }) {
     })
   ).current;
 
+  //variable rotate
+  var rotate = pan.x.interpolate({
+    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+    outputRange: ["-10deg", "0deg", "10deg"],
+    extrapolate: "clamp",
+  });
+
+  var rotateAndTranslate = {
+    transform: [
+      {
+        rotate: rotate,
+      },
+      ...pan.getTranslateTransform(),
+    ],
+  };
+
   // animated cat render
   const Profile = () => {
-    return cats.map((cat, i) => {
-      if (i < currentIndex) {
-        return null;
-      } else if (i == currentIndex) {
-        return (
-          <Animated.View
-            key={i}
-            {...panResponder.panHandlers}
-            style={[
-              { transform: pan.getTranslateTransform() },
-              {
+    return cats
+      .map((cat, i) => {
+        if (i < currentIndex) {
+          return null;
+        } else if (i == currentIndex) {
+          return (
+            <Animated.View
+              key={i}
+              {...panResponder.panHandlers}
+              style={[
+                rotateAndTranslate,
+                {
+                  height: SCREEN_HEIGHT - 120,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  position: "absolute",
+                },
+              ]}
+            >
+              <Animated.View
+                style={{
+                  transform: [{ rotate: "-30deg" }],
+                  position: "absolute",
+                  top: 50,
+                  left: 40,
+                  zIndex: 1000,
+                }}
+              >
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "green",
+                    color: "green",
+                    fontSize: 32,
+                    fontWeight: "800",
+                    padding: 10,
+                  }}
+                >
+                  LIKE
+                </Text>
+              </Animated.View>
+              <Animated.View
+                style={{
+                  transform: [{ rotate: "30deg" }],
+                  position: "absolute",
+                  top: 50,
+                  right: 40,
+                  zIndex: 1000,
+                }}
+              >
+                <Text
+                  style={{
+                    borderWidth: 1,
+                    borderColor: "red",
+                    color: "red",
+                    fontSize: 32,
+                    fontWeight: "800",
+                    padding: 10,
+                  }}
+                >
+                  NOPE
+                </Text>
+              </Animated.View>
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: "cover",
+                  borderRadius: 20,
+                }}
+                source={cat.uri}
+              />
+            </Animated.View>
+          );
+        } else {
+          return (
+            <Animated.View
+              key={i}
+              style={{
                 height: SCREEN_HEIGHT - 120,
                 width: SCREEN_WIDTH,
                 padding: 10,
                 position: "absolute",
-              },
-            ]}
-          >
-            <Image
-              style={{
-                flex: 1,
-                height: null,
-                width: null,
-                resizeMode: "cover",
-                borderRadius: 20,
               }}
-              source={cat.uri}
-            />
-          </Animated.View>
-        );
-      } else {
-        return (
-          <Animated.View
-            key={i}
-            style={{
-              height: SCREEN_HEIGHT - 120,
-              width: SCREEN_WIDTH,
-              padding: 10,
-              position: "absolute",
-            }}
-          >
-            <Image
-              style={{
-                flex: 1,
-                height: null,
-                width: null,
-                resizeMode: "cover",
-                borderRadius: 20,
-              }}
-              source={cat.uri}
-            />
-          </Animated.View>
-        );
-      }
-    });
+            >
+              <Image
+                style={{
+                  flex: 1,
+                  height: null,
+                  width: null,
+                  resizeMode: "cover",
+                  borderRadius: 20,
+                }}
+                source={cat.uri}
+              />
+            </Animated.View>
+          );
+        }
+      })
+      .reverse();
   };
 
   return (
