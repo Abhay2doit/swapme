@@ -43,7 +43,10 @@ const Login = ({ navigation }) => {
             accessToken
         );
 
-        setApiData(await response.json());
+        const googleData = await response.json();
+
+        //passing the gmail values to home component
+        navigation.navigate("Home", googleData);
       }
       getUserData();
     }
