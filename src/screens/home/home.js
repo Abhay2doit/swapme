@@ -55,6 +55,19 @@ function Home({ googleData }) {
     ],
   };
 
+  //like and nope opacity
+  var likeOpacity = pan.x.interpolate({
+    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+    outputRange: [0, 0, 1],
+    extrapolate: "clamp",
+  });
+
+  var nopeOpacity = pan.x.interpolate({
+    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+    outputRange: [1, 0, 0],
+    extrapolate: "clamp",
+  });
+
   // animated cat render
   const Profile = () => {
     return cats
@@ -78,6 +91,7 @@ function Home({ googleData }) {
             >
               <Animated.View
                 style={{
+                  opacity: likeOpacity,
                   transform: [{ rotate: "-30deg" }],
                   position: "absolute",
                   top: 50,
@@ -100,6 +114,7 @@ function Home({ googleData }) {
               </Animated.View>
               <Animated.View
                 style={{
+                  opacity: nopeOpacity,
                   transform: [{ rotate: "30deg" }],
                   position: "absolute",
                   top: 50,
