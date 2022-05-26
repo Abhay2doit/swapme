@@ -1,4 +1,6 @@
-import * as React from "react";
+//react import
+import React, { useState, useEffect, useRef, useMemo } from "react";
+
 import {
   StyleSheet,
   Text,
@@ -6,6 +8,7 @@ import {
   Dimensions,
   Image,
   Animated,
+  PanResponder,
 } from "react-native";
 
 //importing image
@@ -15,8 +18,56 @@ import cats from "../../data/cats";
 const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
-function Home(googleData) {
-  const { email, given_name, name } = googleData.route.params;
+function Home({ googleData }) {
+  // const { email, given_name, name } = googleData.route.params;
+
+  //seting up PanResponder
+  //it may need to be added in the useEffect
+  const pan = useRef(new Animated.ValueXY()).current;
+  const panResponder = useRef(
+    PanResponder.create({
+      onStartShouldSetPanResponder: (evt, gestureState) => true,
+
+      onPanResponderMove: (evt, gestureState) => {
+        pan.setValue({ x: gestureState.dx, y: gestureState.dy });
+      },
+      onPanResponderRelease: () => {
+        pan.flattenOffset();
+      },
+    })
+  ).current;
+
+  // animated cat render
+  const Profile = () => {
+    return cats.map((cat, i) => {
+      return (
+        <Animated.View
+          key={i}
+          {...panResponder.panHandlers}
+          style={[
+            { transform: pan.getTranslateTransform() },
+            {
+              height: SCREEN_HEIGHT - 120,
+              width: SCREEN_WIDTH,
+              padding: 10,
+              position: "absolute",
+            },
+          ]}
+        >
+          <Image
+            style={{
+              flex: 1,
+              height: null,
+              width: null,
+              resizeMode: "cover",
+              borderRadius: 20,
+            }}
+            source={cat.uri}
+          />
+        </Animated.View>
+      );
+    });
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -28,33 +79,5 @@ function Home(googleData) {
     </View>
   );
 }
-
-//animated cat render
-const Profile = () => {
-  return cats.map((cat, i) => {
-    return (
-      <Animated.View
-        key={i}
-        style={{
-          height: SCREEN_HEIGHT - 120,
-          width: SCREEN_WIDTH,
-          padding: 10,
-          position: "absolute",
-        }}
-      >
-        <Image
-          style={{
-            flex: 1,
-            height: null,
-            width: null,
-            resizeMode: "cover",
-            borderRadius: 20,
-          }}
-          source={cat.uri}
-        />
-      </Animated.View>
-    );
-  });
-};
 
 export default Home;
