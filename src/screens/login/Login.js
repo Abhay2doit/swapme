@@ -43,7 +43,13 @@ const Login = ({ navigation }) => {
             accessToken
         );
 
-        setApiData(await response.json());
+        const googleData = await response.json();
+        console.log("the data", googleData);
+        navigation.navigate("Home", googleData);
+
+        // setApiData(await response.json());
+
+        //naviagte to next page on sucess
       }
       getUserData();
     }
