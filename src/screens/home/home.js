@@ -19,6 +19,8 @@ const SCREEN_HEIGHT = Dimensions.get("window").height;
 const SCREEN_WIDTH = Dimensions.get("window").width;
 
 function Home({ googleData }) {
+  //useState
+  const [currentIndex, setCurrentIndex] = useState(0);
   // const { email, given_name, name } = googleData.route.params;
 
   //seting up PanResponder
@@ -40,32 +42,59 @@ function Home({ googleData }) {
   // animated cat render
   const Profile = () => {
     return cats.map((cat, i) => {
-      return (
-        <Animated.View
-          key={i}
-          {...panResponder.panHandlers}
-          style={[
-            { transform: pan.getTranslateTransform() },
-            {
+      if (i < currentIndex) {
+        return null;
+      } else if (i == currentIndex) {
+        return (
+          <Animated.View
+            key={i}
+            {...panResponder.panHandlers}
+            style={[
+              { transform: pan.getTranslateTransform() },
+              {
+                height: SCREEN_HEIGHT - 120,
+                width: SCREEN_WIDTH,
+                padding: 10,
+                position: "absolute",
+              },
+            ]}
+          >
+            <Image
+              style={{
+                flex: 1,
+                height: null,
+                width: null,
+                resizeMode: "cover",
+                borderRadius: 20,
+              }}
+              source={cat.uri}
+            />
+          </Animated.View>
+        );
+      } else {
+        return (
+          <Animated.View
+            key={i}
+            style={{
               height: SCREEN_HEIGHT - 120,
               width: SCREEN_WIDTH,
               padding: 10,
               position: "absolute",
-            },
-          ]}
-        >
-          <Image
-            style={{
-              flex: 1,
-              height: null,
-              width: null,
-              resizeMode: "cover",
-              borderRadius: 20,
             }}
-            source={cat.uri}
-          />
-        </Animated.View>
-      );
+          >
+            <Image
+              style={{
+                flex: 1,
+                height: null,
+                width: null,
+                resizeMode: "cover",
+                borderRadius: 20,
+              }}
+              source={cat.uri}
+            />
+          </Animated.View>
+        );
+      }
     });
   };
 
