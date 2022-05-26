@@ -33,8 +33,27 @@ function Home({ googleData }) {
       onPanResponderMove: (evt, gestureState) => {
         pan.setValue({ x: gestureState.dx, y: gestureState.dy });
       },
-      onPanResponderRelease: () => {
-        pan.flattenOffset();
+      onPanResponderRelease: (evt, gestureState) => {
+        if (gestureState.dx > 120) {
+          Animated.spring(pan, {
+            toValue: { x: SCREEN_WIDTH + 100, y: gestureState.dy },
+          }).start(() => {
+            setCurrentIndex(currentIndex + 1);
+            pan.setValue({ x: 0, y: 0 });
+          });
+        } else if (gestureState.dx < -120) {
+          Animated.spring(pan, {
+            toValue: { x: -SCREEN_WIDTH - 100, y: gestureState.dy },
+          }).start(() => {
+            setCurrentIndex(currentIndex + 1);
+            pan.setValue({ x: 0, y: 0 });
+          });
+        } else {
+          Animated.spring(pan, {
+            toValue: { x: 0, y: 0 },
+            friction: 4,
+          }).start();
+        }
       },
     })
   ).current;
@@ -65,6 +84,19 @@ function Home({ googleData }) {
   var nopeOpacity = pan.x.interpolate({
     inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
     outputRange: [1, 0, 0],
+    extrapolate: "clamp",
+  });
+
+  //Adding next card effect
+  var nextCardOpacity = pan.x.interpolate({
+    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+    outputRange: [1, 0, 1],
+    extrapolate: "clamp",
+  });
+
+  var nextCardScale = pan.x.interpolate({
+    inputRange: [-SCREEN_WIDTH / 2, 0, SCREEN_WIDTH / 2],
+    outputRange: [1, 0.8, 1],
     extrapolate: "clamp",
   });
 
@@ -151,12 +183,16 @@ function Home({ googleData }) {
           return (
             <Animated.View
               key={i}
-              style={{
-                height: SCREEN_HEIGHT - 120,
-                width: SCREEN_WIDTH,
-                padding: 10,
-                position: "absolute",
-              }}
+              style={[
+                {
+                  opacity: nextCardOpacity,
+                  transform: [{ scale: nextCardScale }],
+                  height: SCREEN_HEIGHT - 120,
+                  width: SCREEN_WIDTH,
+                  padding: 10,
+                  position: "absolute",
+                },
+              ]}
             >
               <Image
                 style={{
