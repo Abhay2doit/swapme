@@ -8,13 +8,13 @@ import {
   Image,
 } from "react-native";
 import React, { useState, useEffect } from "react";
-import userData from "../data/userData.json";
+import userData from "../../data/userData.json";
 import * as WebBrowser from "expo-web-browser";
 import * as Google from "expo-auth-session/providers/google";
 
 WebBrowser.maybeCompleteAuthSession();
 
-const Login = () => {
+const Login = ({ navigation }) => {
   const [request, response, promptAsync] = Google.useAuthRequest({
     expoClientId:
       "640386546445-fh7iv04kbgq9me7m7m7pcmm2locg5b8e.apps.googleusercontent.com",
@@ -42,10 +42,10 @@ const Login = () => {
           "https://www.googleapis.com/oauth2/v3/userinfo?access_token=" +
             accessToken
         );
+
         setApiData(await response.json());
       }
       getUserData();
-      console.log({ apiData });
     }
   }, [response]);
 
@@ -66,13 +66,14 @@ const Login = () => {
 
   return (
     <View style={animating ? styles.opaqueContainer : styles.container}>
-      {/* {animating?<ActivityIndicator
-          size="large"
-          style={styles.activityIndicator}
-        />:null} */}
       {apiData ? (
         <View>
           <Text>Welcome {apiData.name}</Text>
+          {/* adding button just to navigate further */}
+          <Button
+            title="Go to home page"
+            onPress={() => navigation.navigate("Home")}
+          />
           <Image style={styles.userImage} source={{ uri: apiData.picture }} />
         </View>
       ) : null}
