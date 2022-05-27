@@ -81,6 +81,10 @@ const Login = ({ navigation }) => {
         </View>
       ) : null}
       <Text style={styles.header}>SWAP ME</Text>
+      <Button
+        title="Go to home page"
+        onPress={() => navigation.navigate("Home")}
+      />
       <View style={styles.subContainer}>
         <Text>Email</Text>
         <TextInput
